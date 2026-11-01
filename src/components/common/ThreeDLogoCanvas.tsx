@@ -1,15 +1,19 @@
 // =============================================================================
 // VAAHAN TRANSIT SYSTEM - 3D LOGO CANVAS
-// Real 3D Extruded Geometry with Polished Metallic PBR Shading in Three.js
-// Features:
-//   - Authentic 3D depth and smooth beveled edges
-//   - Glossy metallic cyan/electric-blue MeshPhysicalMaterial
-//   - Step 1: 3D Left stroke forms from top-left to bottom-center (\)
-//   - Step 2: 3D Right stroke forms from bottom-center to top-right (/)
-//   - Step 3: Strokes seamlessly unite into a monolithic solid 3D V
-//   - Step 4: Physically based specular light sweep across the beveled edges
-//   - Robust WebGL initialization with zero precision/null crashes
-//   - 60 FPS performance with dynamic canvas lifecycle & clean disposal
+// Real 3D Extruded Geometry with Polished Metallic Silver/Chrome & Cyan Highlights
+//
+// Animation Sequence:
+//   Step 1: First 3D stroke draws from top-left to bottom-center (\)
+//   Step 2: Second 3D stroke continues from bottom-center to top-right (/)
+//   Step 3: Both strokes meet seamlessly to form the complete symmetrical uppercase 3D V
+//   Step 4: Physically based specular light sweep glints across the chrome bevels
+//   Step 5: Brand typography reveals beneath the completed 3D emblem
+//
+// Architecture:
+//   - Zero runtime geometry re-creation: uses pre-built extruded beveled 3D solids
+//   - Local clipping planes guarantee that Stroke 1 and Stroke 2 ALWAYS execute fully
+//   - Polished metallic chrome material with electric cyan and sky blue highlights
+//   - Zero precision crashes, safe dynamic canvas lifecycle, and clean disposal
 // =============================================================================
 
 import React, { useEffect, useRef } from 'react';
@@ -35,19 +39,18 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
     if (!container) return;
 
     // -------------------------------------------------------------------------
-    // 1. DYNAMIC FRESH CANVAS CREATION & SAFE CONTEXT ACQUISITION
-    // Creating the canvas dynamically prevents stale WebGL context reuse
-    // and eliminates React StrictMode remount precision errors.
+    // 1. DYNAMIC FRESH CANVAS & SAFE CONTEXT ACQUISITION
     // -------------------------------------------------------------------------
     const canvas = document.createElement('canvas');
-    canvas.className = 'w-full h-full block filter drop-shadow-[0_16px_36px_rgba(2,132,199,0.4)]';
+    canvas.className =
+      'w-full h-full block filter drop-shadow-[0_18px_40px_rgba(14,165,233,0.35)]';
     container.appendChild(canvas);
 
     let gl: RenderingContext | null = null;
     const contextAttributes: WebGLContextAttributes = {
       alpha: true,
       antialias: true,
-      powerPreference: 'default', // 'default' avoids multi-GPU / sandboxed null context failures
+      powerPreference: 'default',
       preserveDrawingBuffer: false,
       failIfMajorPerformanceCaveat: false,
     };
@@ -85,166 +88,151 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
       return;
     }
 
+    // Enable local clipping planes for smooth, un-failing stroke progression
+    renderer.localClippingEnabled = true;
+
     const scene = new THREE.Scene();
 
-    const width = container.clientWidth || 240;
-    const height = container.clientHeight || 240;
+    const width = container.clientWidth || 260;
+    const height = container.clientHeight || 260;
 
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 0, 7.8);
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+    camera.position.set(0, 0, 8.2);
 
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.35;
 
     // -------------------------------------------------------------------------
-    // 3. STUDIO LIGHTING RIG
+    // 3. MULTI-TIER STUDIO LIGHTING RIG
+    // Polished Silver/Chrome with Electric Cyan & Light Sky Blue Reflections
     // -------------------------------------------------------------------------
     // Ambient light: Deep navy shadow fill
-    const ambientLight = new THREE.AmbientLight(0x0f172a, 1.4);
+    const ambientLight = new THREE.AmbientLight(0x0a1128, 1.2);
     scene.add(ambientLight);
 
-    // Key light: Crisp cool white-cyan casting highlights on top & front bevels
-    const keyLight = new THREE.DirectionalLight(0xe0f2fe, 3.2);
-    keyLight.position.set(3.5, 4.5, 5.0);
-    scene.add(keyLight);
+    // Key Light 1 (White Specular Core): Gleaming silver chrome highlights
+    const keyLightWhite = new THREE.DirectionalLight(0xffffff, 3.5);
+    keyLightWhite.position.set(2.5, 4.0, 5.0);
+    scene.add(keyLightWhite);
 
-    // Fill light: Deep electric blue
-    const fillLight = new THREE.DirectionalLight(0x0284c7, 1.8);
-    fillLight.position.set(-4.5, -2.5, 3.0);
-    scene.add(fillLight);
+    // Key Light 2 (Electric Cyan Accent): Vibrant electric cyan edge glints
+    const keyLightCyan = new THREE.DirectionalLight(0x0ea5e9, 3.2);
+    keyLightCyan.position.set(-4.5, -1.5, 3.5);
+    scene.add(keyLightCyan);
 
-    // Rim light: Sky cyan edge accent
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 2.5);
-    rimLight.position.set(0.0, 3.5, -4.0);
-    scene.add(rimLight);
+    // Fill Light (Light Sky Blue): Highlights the right wing and extrusion depths
+    const fillLightSky = new THREE.DirectionalLight(0x38bdf8, 2.6);
+    fillLightSky.position.set(4.0, -2.5, 4.0);
+    scene.add(fillLightSky);
 
-    // Light Sweep: Moving specular spotlight for Step 4
+    // Rim Light (Ice Blue Specular Contour): Highlights the rear bevels
+    const rimLightIce = new THREE.DirectionalLight(0x7dd3fc, 3.0);
+    rimLightIce.position.set(0.0, 4.0, -3.5);
+    scene.add(rimLightIce);
+
+    // Light Sweep: Moving specular point light for Step 4
     const sweepLight = new THREE.PointLight(0xffffff, 0, 9.0, 1.2);
-    sweepLight.position.set(-4.0, 3.0, 2.5);
+    sweepLight.position.set(-4.5, 3.5, 3.0);
     scene.add(sweepLight);
 
     // -------------------------------------------------------------------------
-    // 4. GLOSSY METALLIC PBR MATERIAL
+    // 4. POLISHED METALLIC CHROME & SILVER MATERIALS
     // -------------------------------------------------------------------------
-    const metallicMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0x0ea5e9), // Vibrant Cyan / Electric Transit Blue
-      emissive: new THREE.Color(0x0284c7), // Subtle deep-blue luster
-      emissiveIntensity: 0.2,
-      metalness: 0.88, // Highly metallic reflection
-      roughness: 0.15, // Polished specular highlights on bevels
-      clearcoat: 1.0, // High-gloss clearcoat
-      clearcoatRoughness: 0.08,
-      reflectivity: 0.95,
-      side: THREE.DoubleSide,
-    });
+    // Left Stroke Clipping Plane (Sweeps top-left -> bottom-center)
+    const clipPlaneLeft = new THREE.Plane(
+      new THREE.Vector3(-0.3876, 0.9218, 0),
+      -3.4
+    );
+
+    // Right Stroke Clipping Plane (Sweeps bottom-center -> top-right)
+    const clipPlaneRight = new THREE.Plane(
+      new THREE.Vector3(-0.3876, -0.9218, 0),
+      -2.5
+    );
+
+    // Shared material configuration for polished metallic chrome
+    const createChromeMaterial = (clippingPlanes: THREE.Plane[] = []) =>
+      new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(0xf1f5f9), // Polished platinum / chrome silver
+        emissive: new THREE.Color(0x0284c7), // Subtle cyan undertone
+        emissiveIntensity: 0.12, // Subtle, clean luster without neon wash
+        metalness: 0.94, // High-gloss metallic chrome
+        roughness: 0.1, // Mirror polish for crisp specular bevel reflections
+        clearcoat: 1.0, // High-gloss automotive clearcoat layer
+        clearcoatRoughness: 0.05,
+        reflectivity: 1.0,
+        clippingPlanes,
+        clipShadows: true,
+        side: THREE.DoubleSide,
+      });
+
+    const materialLeft = createChromeMaterial([clipPlaneLeft]);
+    const materialRight = createChromeMaterial([clipPlaneRight]);
+    const materialFull = createChromeMaterial([]);
 
     // -------------------------------------------------------------------------
-    // 5. UNIFIED 3D V GEOMETRY & EXTRUSION SETTINGS
+    // 5. MATHEMATICALLY EXACT 3D V GEOMETRIES (Counter-Clockwise Winding)
     // -------------------------------------------------------------------------
     const extrudeSettings: THREE.ExtrudeGeometryOptions = {
       steps: 1,
-      depth: 0.44, // Physical 3D thickness in Z
+      depth: 0.48, // Physical 3D thickness in Z
       bevelEnabled: true,
-      bevelThickness: 0.1, // Smooth beveled edges
+      bevelThickness: 0.09, // Smooth beveled edges
       bevelSize: 0.08,
       bevelOffset: 0,
       bevelSegments: 4, // Silky rounded bevel transitions
     };
 
-    // Unified monolithic solid V shape
+    // A. Left Arm Shape (\ stroke: top-left to apex)
+    const leftShape = new THREE.Shape();
+    leftShape.moveTo(-2.186, 2.6); // Top-left outer
+    leftShape.lineTo(0.0, -2.6); // Outer apex
+    leftShape.lineTo(0.0, -1.0); // Inner crotch
+    leftShape.lineTo(-1.514, 2.6); // Top-left inner
+    leftShape.closePath();
+
+    const leftGeometry = new THREE.ExtrudeGeometry(leftShape, extrudeSettings);
+    const leftMesh = new THREE.Mesh(leftGeometry, materialLeft);
+
+    // B. Right Arm Shape (/ stroke: apex to top-right)
+    const rightShape = new THREE.Shape();
+    rightShape.moveTo(0.0, -2.6); // Outer apex
+    rightShape.lineTo(2.186, 2.6); // Top-right outer
+    rightShape.lineTo(1.514, 2.6); // Top-right inner
+    rightShape.lineTo(0.0, -1.0); // Inner crotch
+    rightShape.closePath();
+
+    const rightGeometry = new THREE.ExtrudeGeometry(rightShape, extrudeSettings);
+    const rightMesh = new THREE.Mesh(rightGeometry, materialRight);
+    rightMesh.visible = false; // Hidden until Step 1 completes
+
+    // C. Unified Monolithic Complete 3D V Shape
     const fullShape = new THREE.Shape();
-    fullShape.moveTo(-2.313, 2.0); // Top-left outer
-    fullShape.lineTo(0.0, -2.626); // Bottom outer apex
-    fullShape.lineTo(2.313, 2.0); // Top-right outer
-    fullShape.lineTo(1.687, 2.0); // Top-right inner
-    fullShape.lineTo(0.0, -1.374); // Inner crotch apex
-    fullShape.lineTo(-1.687, 2.0); // Top-left inner
+    fullShape.moveTo(0.0, -2.6); // Outer apex
+    fullShape.lineTo(2.186, 2.6); // Top-right outer
+    fullShape.lineTo(1.514, 2.6); // Top-right inner
+    fullShape.lineTo(0.0, -1.0); // Inner crotch
+    fullShape.lineTo(-1.514, 2.6); // Top-left inner
+    fullShape.lineTo(-2.186, 2.6); // Top-left outer
     fullShape.closePath();
 
     const fullGeometry = new THREE.ExtrudeGeometry(fullShape, extrudeSettings);
-    fullGeometry.center();
-
-    const fullMesh = new THREE.Mesh(fullGeometry, metallicMaterial);
-    fullMesh.visible = false;
+    const fullMesh = new THREE.Mesh(fullGeometry, materialFull);
+    fullMesh.visible = false; // Activated once both strokes complete
 
     // Master group with realistic 3D perspective tilt
     const vGroup = new THREE.Group();
+    // Default 3D isometric tilt to exhibit real depth, extrusion, and beveled reflections
     vGroup.rotation.x = 0.22; // ~12.5 deg tilt backwards
     vGroup.rotation.y = -0.12; // ~7 deg tilt to side
-    vGroup.position.set(0, 0.15, 0);
+    vGroup.position.set(0, 0.1, 0);
 
+    vGroup.add(leftMesh);
+    vGroup.add(rightMesh);
     vGroup.add(fullMesh);
     scene.add(vGroup);
-
-    // Dynamic stroke meshes for progressive Step 1 and Step 2
-    let stroke1Mesh: THREE.Mesh | null = null;
-    let stroke2Mesh: THREE.Mesh | null = null;
-    let prevGeom1: THREE.BufferGeometry | null = null;
-    let prevGeom2: THREE.BufferGeometry | null = null;
-
-    // Helper to build progressive stroke 1 (top-left to bottom-center)
-    const updateStroke1Geometry = (p: number) => {
-      try {
-        const pClamped = Math.max(0.02, Math.min(1.0, p));
-        const shape = new THREE.Shape();
-        shape.moveTo(-2.313, 2.0);
-        shape.lineTo(-2.313 * (1 - pClamped), 2.0 - 4.626 * pClamped);
-        shape.lineTo(-1.687 * (1 - pClamped), 2.0 - 3.374 * pClamped);
-        shape.lineTo(-1.687, 2.0);
-        shape.closePath();
-
-        const geom = new THREE.ExtrudeGeometry(shape, {
-          ...extrudeSettings,
-          bevelSegments: 3,
-        });
-
-        if (prevGeom1) prevGeom1.dispose();
-        prevGeom1 = geom;
-
-        if (!stroke1Mesh) {
-          stroke1Mesh = new THREE.Mesh(geom, metallicMaterial);
-          vGroup.add(stroke1Mesh);
-        } else {
-          stroke1Mesh.geometry = geom;
-        }
-        stroke1Mesh.visible = true;
-      } catch {
-        // Safe no-op on transient geometry frames
-      }
-    };
-
-    // Helper to build progressive stroke 2 (bottom-center to top-right)
-    const updateStroke2Geometry = (p: number) => {
-      try {
-        const pClamped = Math.max(0.02, Math.min(1.0, p));
-        const shape = new THREE.Shape();
-        shape.moveTo(0.0, -1.374);
-        shape.lineTo(1.687 * pClamped, -1.374 + 3.374 * pClamped);
-        shape.lineTo(2.313 * pClamped, -2.626 + 4.626 * pClamped);
-        shape.lineTo(0.0, -2.626);
-        shape.closePath();
-
-        const geom = new THREE.ExtrudeGeometry(shape, {
-          ...extrudeSettings,
-          bevelSegments: 3,
-        });
-
-        if (prevGeom2) prevGeom2.dispose();
-        prevGeom2 = geom;
-
-        if (!stroke2Mesh) {
-          stroke2Mesh = new THREE.Mesh(geom, metallicMaterial);
-          vGroup.add(stroke2Mesh);
-        } else {
-          stroke2Mesh.geometry = geom;
-        }
-        stroke2Mesh.visible = true;
-      } catch {
-        // Safe no-op on transient geometry frames
-      }
-    };
 
     // -------------------------------------------------------------------------
     // 6. ANIMATION LIFECYCLE CONTROLLER
@@ -252,13 +240,14 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
     let animationFrameId: number;
     const startTime = performance.now();
 
-    const STEP1_START = 200; // t = 0.2s
-    const STEP1_END = 750; // t = 0.75s (Stroke 1 \ forms)
-    const STEP2_START = 750; // t = 0.75s
-    const STEP2_END = 1300; // t = 1.30s (Stroke 2 / continues to top-right)
-    const STEP3_UNIFY = 1300; // t = 1.30s (Strokes merge into solid 3D V)
-    const SWEEP_START = 1300; // t = 1.30s (Light sweep glints across metallic bevels)
-    const SWEEP_END = 2050; // t = 2.05s
+    // Timeline in milliseconds:
+    const STEP1_START = 200; // t = 0.20s: First stroke begins
+    const STEP1_END = 850; // t = 0.85s: First stroke completes at bottom-center (\)
+    const STEP2_START = 850; // t = 0.85s: Second stroke begins from bottom-center
+    const STEP2_END = 1500; // t = 1.50s: Second stroke completes at top-right (/)
+    const STEP3_UNIFY = 1500; // t = 1.50s: Seamless solid 3D V
+    const SWEEP_START = 1500; // t = 1.50s: Specular light sweep across chrome bevels
+    const SWEEP_END = 2300; // t = 2.30s: Sweep completes
 
     let stepNotified = 0;
 
@@ -269,28 +258,46 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
       const elapsed = now - startTime;
 
       // -----------------------------------------------------------------------
-      // STEP 1: First 3D Stroke Forms (\)
+      // STEP 1: First 3D Stroke Forms (\) from top-left to bottom-center
       // -----------------------------------------------------------------------
-      if (elapsed >= STEP1_START && elapsed < STEP1_END) {
-        const rawProgress = (elapsed - STEP1_START) / (STEP1_END - STEP1_START);
-        const p1 = cubicEase(Math.min(1.0, rawProgress));
-        updateStroke1Geometry(p1);
+      if (elapsed < STEP2_START) {
+        leftMesh.visible = true;
+        rightMesh.visible = false;
+        fullMesh.visible = false;
 
-        if (stepNotified < 1) {
+        const rawP1 = Math.max(
+          0,
+          Math.min(1.0, (elapsed - STEP1_START) / (STEP1_END - STEP1_START))
+        );
+        const p1 = cubicEase(rawP1);
+        // Plane moves from -3.40 (fully clipped) to +2.60 (fully revealed)
+        clipPlaneLeft.constant = -3.4 + p1 * 6.0;
+
+        if (rawP1 > 0 && stepNotified < 1) {
           stepNotified = 1;
           onStepComplete?.(1);
         }
       }
 
       // -----------------------------------------------------------------------
-      // STEP 2: Second 3D Stroke Continues to Top-Right (/)
+      // STEP 2: Second 3D Stroke Continues from bottom-center to top-right (/)
       // -----------------------------------------------------------------------
-      if (elapsed >= STEP2_START && elapsed < STEP2_END) {
-        updateStroke1Geometry(1.0);
+      if (elapsed >= STEP2_START && elapsed < STEP3_UNIFY) {
+        // Ensure Stroke 1 stays 100% visible
+        leftMesh.visible = true;
+        clipPlaneLeft.constant = 2.6;
 
-        const rawProgress = (elapsed - STEP2_START) / (STEP2_END - STEP2_START);
-        const p2 = cubicEase(Math.min(1.0, rawProgress));
-        updateStroke2Geometry(p2);
+        // Reveal Stroke 2 progressively upwards
+        rightMesh.visible = true;
+        fullMesh.visible = false;
+
+        const rawP2 = Math.max(
+          0,
+          Math.min(1.0, (elapsed - STEP2_START) / (STEP2_END - STEP2_START))
+        );
+        const p2 = cubicEase(rawP2);
+        // Plane moves from -2.50 (at bottom apex) up to +3.40 (fully revealed at top-right)
+        clipPlaneRight.constant = -2.5 + p2 * 5.9;
 
         if (stepNotified < 2) {
           stepNotified = 2;
@@ -302,8 +309,8 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
       // STEP 3 & 4: Seamless Monolithic Solid 3D V + Specular Light Sweep
       // -----------------------------------------------------------------------
       if (elapsed >= STEP3_UNIFY) {
-        if (stroke1Mesh) stroke1Mesh.visible = false;
-        if (stroke2Mesh) stroke2Mesh.visible = false;
+        leftMesh.visible = false;
+        rightMesh.visible = false;
         fullMesh.visible = true;
 
         if (stepNotified < 3) {
@@ -311,16 +318,19 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
           onStepComplete?.(3);
         }
 
-        // STEP 4: Specular Light Sweep across the finished 3D metallic bevels
+        // STEP 4: Specular Light Sweep glints across the finished chrome bevels
         if (elapsed >= SWEEP_START && elapsed <= SWEEP_END) {
           const sweepP = (elapsed - SWEEP_START) / (SWEEP_END - SWEEP_START);
+          // Sweep path: Top-left -> Apex -> Top-right
           const sweepX = -4.5 + sweepP * 9.0;
-          const sweepY = 3.0 - Math.sin(sweepP * Math.PI) * 2.2;
+          const sweepY = 3.5 - Math.sin(sweepP * Math.PI) * 2.5;
           sweepLight.position.set(sweepX, sweepY, 3.2);
 
-          const intensity = Math.sin(sweepP * Math.PI) * 4.5;
+          // Specular flare intensity
+          const intensity = Math.sin(sweepP * Math.PI) * 5.5;
           sweepLight.intensity = intensity;
 
+          // Camera micro-yaw conveying realistic physical depth
           vGroup.rotation.y = -0.12 + Math.sin(sweepP * Math.PI) * 0.08;
           vGroup.rotation.x = 0.22 - Math.sin(sweepP * Math.PI) * 0.04;
         } else if (elapsed > SWEEP_END) {
@@ -336,8 +346,9 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
       try {
         renderer.render(scene, camera);
       } catch {
-        // Safe render error handling
+        // Safe frame skip
       }
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -361,16 +372,18 @@ export const ThreeDLogoCanvas: React.FC<ThreeDLogoCanvasProps> = ({
     resizeObserver.observe(container);
 
     // -------------------------------------------------------------------------
-    // 8. CLEANUP (Without forceContextLoss to avoid destroying canvas context)
+    // 8. RESOURCE CLEANUP
     // -------------------------------------------------------------------------
     return () => {
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
 
-      if (prevGeom1) prevGeom1.dispose();
-      if (prevGeom2) prevGeom2.dispose();
+      leftGeometry.dispose();
+      rightGeometry.dispose();
       fullGeometry.dispose();
-      metallicMaterial.dispose();
+      materialLeft.dispose();
+      materialRight.dispose();
+      materialFull.dispose();
       renderer.dispose();
 
       if (canvas.parentNode) {

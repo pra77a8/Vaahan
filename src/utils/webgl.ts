@@ -17,3 +17,4 @@ export const isWebGLAvailable = (): boolean => {
     return false;
   }
 };
+

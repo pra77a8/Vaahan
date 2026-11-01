@@ -31,7 +31,7 @@ interface AnimatedPreloaderProps {
 
 export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
   onComplete,
-  minDurationMs = 2400,
+  minDurationMs = 2700,
 }) => {
   const [isFinishing, setIsFinishing] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -128,19 +128,20 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
             >
               <defs>
                 <linearGradient id="vStrokeGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#38BDF8" />
-                  <stop offset="70%" stopColor="#0EA5E9" />
-                  <stop offset="100%" stopColor="#0284C7" />
+                  <stop offset="0%" stopColor="#FFFFFF" />
+                  <stop offset="40%" stopColor="#E2E8F0" />
+                  <stop offset="75%" stopColor="#38BDF8" />
+                  <stop offset="100%" stopColor="#0EA5E9" />
                 </linearGradient>
                 <linearGradient id="vStrokeGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#0284C7" />
-                  <stop offset="35%" stopColor="#0EA5E9" />
-                  <stop offset="80%" stopColor="#38BDF8" />
-                  <stop offset="100%" stopColor="#F59E0B" />
+                  <stop offset="0%" stopColor="#0EA5E9" />
+                  <stop offset="35%" stopColor="#38BDF8" />
+                  <stop offset="70%" stopColor="#E2E8F0" />
+                  <stop offset="100%" stopColor="#FFFFFF" />
                 </linearGradient>
                 <radialGradient id="vInnerBloom" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#0EA5E9" stopOpacity="0.3" />
-                  <stop offset="70%" stopColor="#0284C7" stopOpacity="0.08" />
+                  <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.25" />
+                  <stop offset="70%" stopColor="#0EA5E9" stopOpacity="0.06" />
                   <stop offset="100%" stopColor="#070B14" stopOpacity="0" />
                 </radialGradient>
               </defs>
@@ -148,7 +149,7 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
               {/* Guide Track */}
               <path
                 d="M 46 44 L 100 156 L 154 44"
-                stroke="rgba(56, 189, 248, 0.12)"
+                stroke="rgba(148, 163, 184, 0.15)"
                 strokeWidth="12"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -164,8 +165,8 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{
-                  pathLength: { duration: 0.55, delay: 0.25, ease: [0.35, 1, 0.45, 1] },
-                  opacity: { duration: 0.12, delay: 0.25 },
+                  pathLength: { duration: 0.65, delay: 0.2, ease: [0.35, 1, 0.45, 1] },
+                  opacity: { duration: 0.12, delay: 0.2 },
                 }}
               />
 
@@ -178,8 +179,8 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
                 transition={{
-                  pathLength: { duration: 0.55, delay: 0.8, ease: [0.35, 1, 0.45, 1] },
-                  opacity: { duration: 0.12, delay: 0.8 },
+                  pathLength: { duration: 0.65, delay: 0.85, ease: [0.35, 1, 0.45, 1] },
+                  opacity: { duration: 0.12, delay: 0.85 },
                 }}
               />
 
@@ -189,7 +190,7 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
                 fill="url(#vInnerBloom)"
                 initial={{ fillOpacity: 0 }}
                 animate={{ fillOpacity: 0.2 }}
-                transition={{ delay: 1.35, duration: 0.6 }}
+                transition={{ delay: 1.5, duration: 0.6 }}
               />
             </svg>
           )}
@@ -204,7 +205,7 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
           <motion.div
             initial={{ opacity: 0, y: 10, letterSpacing: '0.24em' }}
             animate={{ opacity: 1, y: 0, letterSpacing: '0.14em' }}
-            transition={{ duration: 0.55, delay: 1.35, ease: [0.25, 1, 0.5, 1] }}
+            transition={{ duration: 0.55, delay: 1.5, ease: [0.25, 1, 0.5, 1] }}
             className="flex items-center gap-2 sm:gap-2.5"
           >
             <span className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.14em] text-white font-['Plus_Jakarta_Sans',sans-serif]">
@@ -218,7 +219,7 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
           <motion.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 1.5, ease: 'easeOut' }}
+            transition={{ duration: 0.45, delay: 1.65, ease: 'easeOut' }}
             className="text-[11px] sm:text-xs md:text-sm font-semibold text-slate-400 tracking-wider uppercase px-2"
           >
             Institutional Transit & Fleet Telemetry System
@@ -231,7 +232,7 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 1.55 }}
+          transition={{ duration: 0.3, delay: 1.7 }}
           className="w-32 sm:w-40 md:w-48 h-0.5 bg-slate-800/80 rounded-full overflow-hidden mt-1 relative"
         >
           <motion.div
