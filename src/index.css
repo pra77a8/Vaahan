@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Smooth, invisible scrollbar for horizontal tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media print {
+  header, footer, nav, button, select {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  #printableBusPass {
+    border: 2px solid #0284c7 !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+}

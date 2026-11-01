@@ -1,0 +1,6 @@
+{
+  "name": "Vaahan - KK Wagh Bus Facility System",
+  "description": "Official college transit portal for K.K. Wagh Education Society: student bus passes, live bus tracking, fee payments, and complete bus, driver and route stop directory.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
