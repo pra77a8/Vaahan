@@ -21,7 +21,8 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { ThreeDLogoCanvas, isWebGLAvailable } from './ThreeDLogoCanvas';
+import { ThreeDLogoCanvas } from './ThreeDLogoCanvas';
+import { isWebGLAvailable } from '../../utils/webgl';
 
 interface AnimatedPreloaderProps {
   onComplete?: () => void;
@@ -34,6 +35,7 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
 }) => {
   const [isFinishing, setIsFinishing] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [has3DError, setHas3DError] = useState(false);
 
   // Check WebGL availability and accessibility preferences
   const [canUse3D] = useState(() => {
@@ -109,11 +111,12 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
         */}
         {/* ============================================================== */}
         <div className="relative w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 flex items-center justify-center">
-          {canUse3D ? (
+          {canUse3D && !has3DError ? (
             /* REAL 3D THREE.JS WEBGL RENDERER */
             <ThreeDLogoCanvas
               className="w-full h-full"
               onStepComplete={(step) => setCurrentStep(step)}
+              onError={() => setHas3DError(true)}
             />
           ) : (
             /* GRACEFUL 2D SVG FALLBACK (if WebGL is unavailable or reduced-motion is requested) */
