@@ -1,21 +1,15 @@
 // =============================================================================
-// VAAHAN TRANSIT SYSTEM - PREMIUM METALLIC CHROME PRELOADER
+// VAAHAN TRANSIT SYSTEM - PREMIUM METALLIC CHROME 'V' PRELOADER
 // 100% Reliable Inline SVG Path Drawing with Framer Motion (motion/react)
-//
-// Drawing Sequence:
-//   1. Starts at top-left endpoint (46, 42)
-//   2. Draws first diagonal down to bottom-center apex (100, 160) (\)
-//   3. Continues seamlessly from bottom-center up to top-right (154, 42) (/)
-//   4. Finishes with one complete, symmetrical uppercase V
-//   5. Completed V remains visible during specular light sweep & brand reveal
-//
-// 3D-Inspired Visual Quality:
-//   - Layered multi-tone metallic chrome gradients (pure platinum, silver, ice blue)
-//   - Polished chrome outer bevel chassis with electric cyan & sky blue edge reflections
-//   - Hairline specular center-ridge highlight for sculpted knife-edge bevel look
-//   - Subtle 3D ambient depth shadow on dark midnight navy background
-//   - Animated specular light sweep across finished chrome bevels
-//   - Zero reliance on Three.js, WebGL clipping, or dynamic polygons
+// Faithfully matching the official reference visual treatment:
+//   - Polished silver/chrome central surface with sharp specular bevels
+//   - Bright electric cyan (#00BFFF) / sky-blue (#38BDF8) illuminated outer edges
+//   - Subtle dark metallic inner bevel channel for genuine 3D sculpted depth
+//   - Controlled cyan glow aura around the V emblem
+//   - Tasteful specular highlights: 4-point star lens flare at top-right,
+//     polished chrome cap at top-left, and glowing junction at apex
+//   - Subtle horizontal cyan ground reflection beneath the hovering apex
+//   - VAAHAN bold typography, KK WAGH badge, and illuminated divider with center flare
 // =============================================================================
 
 import React, { useEffect, useState, useCallback } from 'react';
@@ -94,124 +88,162 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
         filter: 'blur(6px)',
         transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] },
       }}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#070B14] select-none overflow-hidden px-4 py-6"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#020817] select-none overflow-hidden px-4 py-6"
       style={{
         backgroundImage:
-          'radial-gradient(circle at 50% 46%, rgba(14, 165, 233, 0.16) 0%, rgba(15, 23, 42, 0.85) 45%, rgba(7, 11, 20, 0.98) 85%)',
+          'radial-gradient(circle at 50% 43%, rgba(0, 191, 255, 0.11) 0%, rgba(3, 16, 43, 0.55) 45%, #020817 80%)',
       }}
     >
-      {/* Background ambient lighting effects */}
+      {/* Background ambient lighting glow (subtle, noise-free, elegant) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 md:w-[28rem] md:h-[28rem] rounded-full bg-sky-500/10 blur-[100px] animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full bg-cyan-600/8 blur-[85px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 sm:w-96 sm:h-96 md:w-[28rem] md:h-[28rem] rounded-full bg-[#00BFFF]/8 blur-[110px]" />
+        <div className="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-52 h-52 sm:w-64 sm:h-64 rounded-full bg-[#38BDF8]/6 blur-[80px]" />
       </div>
 
       {/* Main container: responsive width & spacing for mobile and laptop */}
       <div className="relative flex flex-col items-center justify-center space-y-4 sm:space-y-5 md:space-y-6 z-10 max-w-sm sm:max-w-md md:max-w-lg w-full">
         {/* ============================================================== */}
-        {/* CENTRAL HERO CANVAS: 3D-SCULPTED CHROME V EMBLEM */}
+        {/* CENTRAL HERO CANVAS: METALLIC CHROME 'V' EMBLEM */}
         {/* Responsive sizing:
-            - Mobile (<640px): w-48 h-48 (192px) - bold, clear, perfectly proportioned
-            - Tablet (sm): w-60 h-60 (240px)
-            - Laptop/Desktop (md): w-72 h-72 (288px) - crisp, spacious hero center
+            - Mobile (<640px): w-52 h-52 (208px)
+            - Tablet (sm): w-64 h-64 (256px)
+            - Laptop/Desktop (md): w-76 h-76 (304px)
         */}
         {/* ============================================================== */}
-        <div className="relative w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 flex items-center justify-center">
+        <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-76 md:h-76 flex items-center justify-center">
           <svg
             viewBox="0 0 200 200"
-            className="w-full h-full drop-shadow-[0_18px_40px_rgba(14,165,233,0.32)]"
+            className="w-full h-full drop-shadow-[0_16px_36px_rgba(0,191,255,0.25)]"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              {/* 1. Chrome Bevel Outer Gradient: Slate silver with cyan rim */}
-              <linearGradient id="chromeBevelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#94A3B8" />
-                <stop offset="25%" stopColor="#E2E8F0" />
-                <stop offset="48%" stopColor="#0EA5E9" />
-                <stop offset="52%" stopColor="#38BDF8" />
-                <stop offset="78%" stopColor="#E2E8F0" />
-                <stop offset="100%" stopColor="#CBD5E1" />
+              {/* 1. Electric Cyan & Sky-Blue Outer Rim Gradient */}
+              <linearGradient id="neonCyanRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#00BFFF" />
+                <stop offset="28%" stopColor="#38BDF8" />
+                <stop offset="50%" stopColor="#00E5FF" />
+                <stop offset="72%" stopColor="#38BDF8" />
+                <stop offset="100%" stopColor="#00BFFF" />
               </linearGradient>
 
-              {/* 2. Chrome Core Gradient: High-polish platinum silver & sky blue */}
-              <linearGradient id="chromeCoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              {/* 2. Dark Metallic Inner Bevel Channel (Genuine 3D sculpted depth) */}
+              <linearGradient id="darkInnerBevelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0A1325" />
+                <stop offset="25%" stopColor="#1E293B" />
+                <stop offset="50%" stopColor="#0B162C" />
+                <stop offset="75%" stopColor="#1E293B" />
+                <stop offset="100%" stopColor="#0A1325" />
+              </linearGradient>
+
+              {/* 3. Polished Chrome Silver Central Surface */}
+              <linearGradient id="chromeSurfaceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="20%" stopColor="#F1F5F9" />
-                <stop offset="38%" stopColor="#94A3B8" />
-                <stop offset="50%" stopColor="#E0F2FE" />
-                <stop offset="68%" stopColor="#38BDF8" />
-                <stop offset="85%" stopColor="#F8FAFC" />
+                <stop offset="16%" stopColor="#F8FAFC" />
+                <stop offset="32%" stopColor="#CBD5E1" />
+                <stop offset="48%" stopColor="#94A3B8" />
+                <stop offset="52%" stopColor="#E0F2FE" />
+                <stop offset="68%" stopColor="#CBD5E1" />
+                <stop offset="84%" stopColor="#F8FAFC" />
                 <stop offset="100%" stopColor="#FFFFFF" />
               </linearGradient>
 
-              {/* 3. Hairline Specular Ridge Gradient: Intense white reflection */}
-              <linearGradient id="specularRidgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              {/* 4. Specular Knife-Edge Center Ridge Highlight */}
+              <linearGradient id="specularCenterRidgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                <stop offset="35%" stopColor="#E0F2FE" stopOpacity="0.8" />
+                <stop offset="25%" stopColor="#E0F2FE" stopOpacity="0.8" />
                 <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
-                <stop offset="70%" stopColor="#BAE6FD" stopOpacity="0.85" />
+                <stop offset="75%" stopColor="#BAE6FD" stopOpacity="0.85" />
                 <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.95" />
               </linearGradient>
 
-              {/* 4. Moving Light Sweep Specular Glint Gradient */}
+              {/* 5. Moving Specular Light Sweep Glint */}
               <linearGradient id="lightSweepGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#38BDF8" stopOpacity="0" />
-                <stop offset="40%" stopColor="#38BDF8" stopOpacity="0.6" />
+                <stop offset="0%" stopColor="#00BFFF" stopOpacity="0" />
+                <stop offset="35%" stopColor="#38BDF8" stopOpacity="0.5" />
                 <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
-                <stop offset="60%" stopColor="#38BDF8" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
+                <stop offset="65%" stopColor="#38BDF8" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#00BFFF" stopOpacity="0" />
               </linearGradient>
 
-              {/* 5. Chrome Node Ball Gradient */}
-              <radialGradient id="chromeBallGrad" cx="35%" cy="35%" r="65%">
+              {/* 6. Chrome Endcap Node Gradient */}
+              <radialGradient id="chromeCapGrad" cx="35%" cy="35%" r="65%">
                 <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="40%" stopColor="#E2E8F0" />
-                <stop offset="75%" stopColor="#0EA5E9" />
-                <stop offset="100%" stopColor="#0284C7" />
+                <stop offset="45%" stopColor="#E2E8F0" />
+                <stop offset="75%" stopColor="#00BFFF" />
+                <stop offset="100%" stopColor="#0369A1" />
               </radialGradient>
 
-              {/* 6. Soft Inner Aura Bloom */}
-              <radialGradient id="vInnerAura" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.22" />
-                <stop offset="70%" stopColor="#0EA5E9" stopOpacity="0.05" />
-                <stop offset="100%" stopColor="#070B14" stopOpacity="0" />
+              {/* 7. Star Glint Beam Horizontal Gradient */}
+              <linearGradient id="starBeamH" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#00BFFF" stopOpacity="0" />
+                <stop offset="35%" stopColor="#38BDF8" stopOpacity="0.7" />
+                <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
+                <stop offset="65%" stopColor="#38BDF8" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#00BFFF" stopOpacity="0" />
+              </linearGradient>
+
+              {/* 8. Star Glint Beam Vertical Gradient */}
+              <linearGradient id="starBeamV" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#00BFFF" stopOpacity="0" />
+                <stop offset="35%" stopColor="#38BDF8" stopOpacity="0.7" />
+                <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
+                <stop offset="65%" stopColor="#38BDF8" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#00BFFF" stopOpacity="0" />
+              </linearGradient>
+
+              {/* 9. Under-Apex Ground Light Pool Gradient */}
+              <radialGradient id="groundReflectGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#00BFFF" stopOpacity="0.85" />
+                <stop offset="30%" stopColor="#38BDF8" stopOpacity="0.45" />
+                <stop offset="70%" stopColor="#0284C7" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#020817" stopOpacity="0" />
               </radialGradient>
 
-              {/* 7. Subtle Cyan Depth Shadow Filter */}
-              <filter id="cyanGlowShadow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-                <feFlood floodColor="#0284C7" floodOpacity="0.5" result="color" />
-                <feComposite in2="blur" operator="in" result="shadow" />
+              {/* Filters */}
+              {/* Controlled Cyan Aura Glow Filter */}
+              <filter id="cyanGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4.5" result="blur" />
                 <feMerge>
-                  <feMergeNode in="shadow" />
+                  <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
+              </filter>
+
+              {/* Star Glint Lens Blur Filter */}
+              <filter id="glintBlurFilter" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" />
+              </filter>
+
+              {/* Ground Reflection Blur Filter */}
+              <filter id="groundBlurFilter" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" />
               </filter>
             </defs>
 
             {/* ---------------------------------------------------------- */}
-            {/* LAYER 1: SILHOUETTE GUIDE TRACK (Visual Anchor) */}
+            {/* LAYER 1: SILHOUETTE GUIDE TRACK (Structural Blueprint) */}
             {/* ---------------------------------------------------------- */}
             <path
               d={vPathData}
-              stroke="rgba(148, 163, 184, 0.12)"
-              strokeWidth="14"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-            />
-
-            {/* ---------------------------------------------------------- */}
-            {/* LAYER 2: 3D AMBIENT DEPTH SHADOW (Offset by +3px in Y) */}
-            {/* ---------------------------------------------------------- */}
-            <motion.path
-              d="M 46 45 L 100 163 L 154 45"
-              stroke="rgba(2, 132, 199, 0.3)"
+              stroke="rgba(148, 163, 184, 0.08)"
               strokeWidth="15"
               strokeLinecap="round"
               strokeLinejoin="round"
-              filter="url(#cyanGlowShadow)"
+              fill="none"
+            />
+
+            {/* ---------------------------------------------------------- */}
+            {/* LAYER 2: CONTROLLED ELECTRIC CYAN OUTER GLOW (Reference Aura) */}
+            {/* ---------------------------------------------------------- */}
+            <motion.path
+              d={vPathData}
+              stroke="#00BFFF"
+              strokeWidth="16"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeOpacity={0.4}
+              filter="url(#cyanGlowFilter)"
               fill="none"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={strokeAnimation}
@@ -219,12 +251,12 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
             />
 
             {/* ---------------------------------------------------------- */}
-            {/* LAYER 3: CHROME BEVEL CHASSIS (Outer Metallic Rim) */}
+            {/* LAYER 3: BRIGHT ELECTRIC CYAN ILLUMINATED OUTER EDGE */}
             {/* ---------------------------------------------------------- */}
             <motion.path
               d={vPathData}
-              stroke="url(#chromeBevelGrad)"
-              strokeWidth="13"
+              stroke="url(#neonCyanRimGrad)"
+              strokeWidth="12"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
@@ -234,12 +266,13 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
             />
 
             {/* ---------------------------------------------------------- */}
-            {/* LAYER 4: POLISHED PLATINUM CHROME CORE (Main Body) */}
+            {/* LAYER 4: DARK METALLIC INNER BEVEL CHANNEL */}
+            {/* Creates the recessed inner groove for 3D metallic realism */}
             {/* ---------------------------------------------------------- */}
             <motion.path
               d={vPathData}
-              stroke="url(#chromeCoreGrad)"
-              strokeWidth="8.5"
+              stroke="url(#darkInnerBevelGrad)"
+              strokeWidth="8"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
@@ -249,12 +282,12 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
             />
 
             {/* ---------------------------------------------------------- */}
-            {/* LAYER 5: SPECULAR KNIFE-EDGE RIDGE (Brilliant Highlight) */}
+            {/* LAYER 5: POLISHED SILVER / CHROME CENTRAL SURFACE */}
             {/* ---------------------------------------------------------- */}
             <motion.path
               d={vPathData}
-              stroke="url(#specularRidgeGrad)"
-              strokeWidth="2.5"
+              stroke="url(#chromeSurfaceGrad)"
+              strokeWidth="5"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
@@ -264,20 +297,35 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
             />
 
             {/* ---------------------------------------------------------- */}
-            {/* LAYER 6: SPECULAR LIGHT SWEEP ACROSS FINISHED CHROME V */}
-            {/* Glints across the finished V after completion (t = 1.6s - 2.3s) */}
+            {/* LAYER 6: SPECULAR KNIFE-EDGE RIDGE (Razor White Reflection) */}
+            {/* ---------------------------------------------------------- */}
+            <motion.path
+              d={vPathData}
+              stroke="url(#specularCenterRidgeGrad)"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={strokeAnimation}
+              transition={strokeTransition}
+            />
+
+            {/* ---------------------------------------------------------- */}
+            {/* LAYER 7: SUBTLE SPECULAR LIGHT SWEEP ACROSS COMPLETED V */}
+            {/* Passes over the finished V after strokes meet (t = 1.65s - 2.4s) */}
             {/* ---------------------------------------------------------- */}
             <motion.path
               d={vPathData}
               stroke="url(#lightSweepGrad)"
-              strokeWidth="10"
+              strokeWidth="9"
               strokeLinecap="round"
               strokeLinejoin="round"
               fill="none"
               initial={{ pathLength: 0.22, pathOffset: -0.22, opacity: 0 }}
               animate={{
-                pathOffset: [ -0.22, 1.05 ],
-                opacity: [ 0, 0.9, 0.9, 0 ],
+                pathOffset: [-0.22, 1.05],
+                opacity: [0, 0.95, 0.95, 0],
               }}
               transition={{
                 delay: 1.65,
@@ -287,133 +335,211 @@ export const AnimatedPreloader: React.FC<AnimatedPreloaderProps> = ({
             />
 
             {/* ---------------------------------------------------------- */}
-            {/* LAYER 7: CHROME BEVEL ACCENT NODES */}
-            {/* Top-Left node: pops in as stroke starts (t = 0.25s) */}
+            {/* LAYER 8: SUBTLE REFLECTION BENEATH THE V (Reference Pool) */}
+            {/* Positioned right under the apex at y = 178 */}
             {/* ---------------------------------------------------------- */}
+            <motion.g
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.55, duration: 0.55, ease: 'easeOut' }}
+            >
+              {/* Diffuse horizontal reflection pool */}
+              <ellipse
+                cx="100"
+                cy="178"
+                rx="32"
+                ry="3.5"
+                fill="url(#groundReflectGrad)"
+                filter="url(#groundBlurFilter)"
+              />
+              {/* Sharp specular center reflection line */}
+              <line
+                x1="84"
+                y1="178"
+                x2="116"
+                y2="178"
+                stroke="#00BFFF"
+                strokeWidth="1.2"
+                strokeOpacity="0.75"
+                strokeLinecap="round"
+              />
+            </motion.g>
+
+            {/* ---------------------------------------------------------- */}
+            {/* LAYER 9: TASTEFUL HIGHLIGHTS AT THE 3 JUNCTIONS */}
+            {/* ---------------------------------------------------------- */}
+
+            {/* A. Top-Left Endpoint (46, 42): Polished chrome cap with cyan rim */}
             <motion.circle
               cx="46"
               cy="42"
-              r="5.5"
-              fill="url(#chromeBallGrad)"
-              stroke="#FFFFFF"
-              strokeWidth="1"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.28, type: 'spring', stiffness: 350, damping: 20 }}
-            />
-
-            {/* Bottom-Center Apex node: pops in as Stroke 1 arrives at apex (t = 0.85s) */}
-            <motion.circle
-              cx="100"
-              cy="160"
-              r="6"
-              fill="url(#chromeBallGrad)"
+              r="4.8"
+              fill="url(#chromeCapGrad)"
               stroke="#38BDF8"
               strokeWidth="1.2"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.88, type: 'spring', stiffness: 350, damping: 20 }}
+              transition={{ delay: 0.28, type: 'spring', stiffness: 350, damping: 20 }}
+            />
+            {/* Top-Left soft specular glow */}
+            <motion.circle
+              cx="46"
+              cy="42"
+              r="2"
+              fill="#FFFFFF"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.9 }}
+              transition={{ delay: 0.32 }}
             />
 
-            {/* Top-Right node: pops in as Stroke 2 completes (t = 1.60s) */}
+            {/* B. Bottom-Center Apex (100, 160): Glowing cyan apex junction */}
             <motion.circle
-              cx="154"
-              cy="42"
-              r="5.5"
-              fill="url(#chromeBallGrad)"
-              stroke="#FFFFFF"
-              strokeWidth="1"
+              cx="100"
+              cy="160"
+              r="5.2"
+              fill="#00BFFF"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1.62, type: 'spring', stiffness: 350, damping: 20 }}
+              transition={{ delay: 0.88, type: 'spring', stiffness: 350, damping: 20 }}
+            />
+            <motion.circle
+              cx="100"
+              cy="160"
+              r="2.5"
+              fill="#FFFFFF"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.92 }}
             />
 
-            {/* ---------------------------------------------------------- */}
-            {/* LAYER 8: COMPLETED V SOFT INNER AURA (t = 1.65s) */}
-            {/* ---------------------------------------------------------- */}
-            <motion.polygon
-              points="46,42 100,160 154,42"
-              fill="url(#vInnerAura)"
-              initial={{ fillOpacity: 0 }}
-              animate={{ fillOpacity: 0.2 }}
-              transition={{ delay: 1.65, duration: 0.6 }}
-            />
-
-            {/* Inner high-tech telemetry chevron */}
-            <motion.path
-              d="M 68 64 L 100 134 L 132 64"
-              stroke="#38BDF8"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="4 4"
-              fill="none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.45 }}
-              transition={{ delay: 1.65, duration: 0.5 }}
-            />
+            {/* C. Top-Right Endpoint (154, 42): 4-POINT STAR LENS FLARE / GLINT */}
+            {/* Matches the diamond star flare in the reference image */}
+            <motion.g
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{
+                delay: 1.6,
+                type: 'spring',
+                stiffness: 300,
+                damping: 18,
+              }}
+            >
+              {/* Cyan halo bloom */}
+              <circle
+                cx="154"
+                cy="42"
+                r="9"
+                fill="#00BFFF"
+                fillOpacity="0.4"
+                filter="url(#glintBlurFilter)"
+              />
+              {/* Horizontal lens flare needle */}
+              <line
+                x1="136"
+                y1="42"
+                x2="172"
+                y2="42"
+                stroke="url(#starBeamH)"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+              {/* Vertical lens flare needle */}
+              <line
+                x1="154"
+                y1="24"
+                x2="154"
+                y2="60"
+                stroke="url(#starBeamV)"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+              {/* 45-degree diagonal specular gleams */}
+              <line
+                x1="145"
+                y1="33"
+                x2="163"
+                y2="51"
+                stroke="#FFFFFF"
+                strokeWidth="0.8"
+                strokeOpacity="0.65"
+              />
+              <line
+                x1="145"
+                y1="51"
+                x2="163"
+                y2="33"
+                stroke="#FFFFFF"
+                strokeWidth="0.8"
+                strokeOpacity="0.65"
+              />
+              {/* Bright white star core */}
+              <circle cx="154" cy="42" r="3" fill="#FFFFFF" />
+              <circle cx="154" cy="42" r="4.5" fill="none" stroke="#38BDF8" strokeWidth="0.8" />
+            </motion.g>
           </svg>
         </div>
 
         {/* ---------------------------------------------------------- */}
-        {/* BRAND TYPOGRAPHY REVEAL (Accompanies Step 4 & 5) */}
+        {/* BRAND TYPOGRAPHY REVEAL (Matching Reference Image) */}
         {/* ---------------------------------------------------------- */}
-        <div className="flex flex-col items-center justify-center space-y-1.5 sm:space-y-2 text-center">
+        <div className="flex flex-col items-center justify-center space-y-2 sm:space-y-2.5 text-center">
+          {/* VAAHAN + KK WAGH BADGE */}
           <motion.div
-            initial={{ opacity: 0, y: 10, letterSpacing: '0.24em' }}
-            animate={{ opacity: 1, y: 0, letterSpacing: '0.14em' }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 1.65, ease: [0.25, 1, 0.5, 1] }}
-            className="flex items-center gap-2 sm:gap-2.5"
+            className="flex items-center gap-2.5 sm:gap-3"
           >
-            <span className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.14em] text-white font-['Plus_Jakarta_Sans',sans-serif]">
+            <span className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.08em] text-[#F8FAFC] font-['Plus_Jakarta_Sans',sans-serif]">
               VAAHAN
             </span>
-            <span className="bg-sky-500/20 text-sky-400 border border-sky-400/30 text-[10px] sm:text-xs font-extrabold px-1.5 py-0.5 rounded-sm tracking-widest uppercase">
+            <span className="bg-[#0A1C38]/85 text-[#38BDF8] border border-[#00BFFF]/45 text-[10px] sm:text-[11px] md:text-xs font-bold px-2 py-0.5 rounded-md tracking-wider uppercase shadow-[0_0_12px_rgba(0,191,255,0.2)]">
               KK WAGH
             </span>
           </motion.div>
 
+          {/* INSTITUTIONAL TRANSIT & FLEET TELEMETRY SYSTEM */}
           <motion.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 1.8, ease: 'easeOut' }}
-            className="text-[11px] sm:text-xs md:text-sm font-semibold text-slate-400 tracking-wider uppercase px-2"
+            className="text-[10px] sm:text-[11px] md:text-xs font-semibold text-[#94A3B8] tracking-[0.16em] uppercase px-2"
           >
             Institutional Transit & Fleet Telemetry System
           </motion.p>
         </div>
 
         {/* ---------------------------------------------------------- */}
-        {/* STREAMLINED TRANSIT PULSE LINE */}
+        {/* ILLUMINATED CYAN DIVIDER WITH CENTER FLARE PIP */}
+        {/* Directly inspired by the reference image's horizontal light line */}
         {/* ---------------------------------------------------------- */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 1.85 }}
-          className="w-32 sm:w-40 md:w-48 h-0.5 bg-slate-800/80 rounded-full overflow-hidden mt-1 relative"
+          initial={{ opacity: 0, scaleX: 0.7 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.55, delay: 1.9, ease: 'easeOut' }}
+          className="relative flex items-center justify-center w-52 sm:w-64 md:w-76 h-3 mt-0.5"
         >
-          <motion.div
-            className="absolute top-0 bottom-0 w-16 bg-gradient-to-r from-transparent via-sky-400 to-transparent rounded-full"
-            initial={{ x: '-100%' }}
-            animate={{ x: '250%' }}
-            transition={{
-              repeat: Infinity,
-              duration: 1.1,
-              ease: 'easeInOut',
-            }}
-          />
+          {/* Main glowing divider line fading out at both ends */}
+          <div className="w-full h-[1.2px] bg-gradient-to-r from-transparent via-[#00BFFF]/65 to-transparent" />
+
+          {/* Center cyan glow halo */}
+          <div className="absolute w-14 h-1.5 bg-gradient-to-r from-transparent via-[#00BFFF] to-transparent blur-[3px]" />
+
+          {/* Center bright flare pip */}
+          <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#00BFFF,0_0_4px_#FFFFFF]" />
         </motion.div>
       </div>
 
-      {/* Skip control in bottom right for fast navigation */}
+      {/* Skip Intro button at bottom-right */}
       <motion.button
         type="button"
         onClick={handleFinish}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.6 }}
-        whileHover={{ opacity: 1 }}
+        animate={{ opacity: 0.65 }}
+        whileHover={{ opacity: 1, scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
         transition={{ delay: 0.8 }}
-        className="absolute bottom-5 right-5 text-[11px] sm:text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer bg-slate-900/60 hover:bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700/60 backdrop-blur-xs"
+        className="absolute bottom-5 right-5 text-[11px] sm:text-xs font-medium text-slate-400 hover:text-white transition-all cursor-pointer bg-[#0A1325]/80 hover:bg-[#0F1E38] px-3.5 py-1.5 rounded-full border border-slate-700/50 backdrop-blur-sm shadow-sm"
       >
         Skip Intro →
       </motion.button>
