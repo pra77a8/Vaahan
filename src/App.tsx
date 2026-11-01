@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -7,7 +7,9 @@ import {
   useNavigate,
   useLocation,
 } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
 import { AppProvider, useApp } from './context/AppContext';
+import { AnimatedPreloader } from './components/common/AnimatedPreloader';
 import { StudentAuthView } from './components/auth/StudentAuthView';
 import { DriverAuthView } from './components/auth/DriverAuthView';
 import { AdminAuthView } from './components/auth/AdminAuthView';
@@ -436,8 +438,23 @@ const AppRoutes: React.FC = () => {
 };
 
 export default function App() {
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  useEffect(() => {
+    // Allows developers or QA to trigger a replay on demand:
+    // window.dispatchEvent(new CustomEvent('vaahan:replay-preloader'));
+    const handleReplay = () => setShowPreloader(true);
+    window.addEventListener('vaahan:replay-preloader', handleReplay);
+    return () => window.removeEventListener('vaahan:replay-preloader', handleReplay);
+  }, []);
+
   return (
     <AppProvider>
+      <AnimatePresence mode="wait">
+        {showPreloader && (
+          <AnimatedPreloader onComplete={() => setShowPreloader(false)} />
+        )}
+      </AnimatePresence>
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
